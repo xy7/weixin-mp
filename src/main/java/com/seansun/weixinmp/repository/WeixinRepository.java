@@ -25,11 +25,11 @@ public class WeixinRepository {
 	private Map<String, ParseCode2AccessTokenResponse> redirectTokenCache = new ConcurrentHashMap<>();
 
 	public String getAppid() {
-		return "wx6a84e2929940254d";
+		return "wxd9dd92aa4899782f";//"wx6a84e2929940254d";
 	}
 
 	public String getSecret() {
-		return "aba44dc730e0d22f0558d76184fd3650";
+		return "ab2bf7291b28baa5de3ea80bc12ab25c"; //"aba44dc730e0d22f0558d76184fd3650";
 	}
 
 	public String getToken() {

@@ -1,0 +1,58 @@
+
+姓名：赵卓胤
+单位：深圳卓意够科技
+职务：董事长
+电话：18124788588
+微信：18124788588
+QQ：5488768
+城市：深圳
+籍贯：山东
+主业：文化行业互联网项目孵化/传统行业互联网项目孵化/直播营销推广平台/系统集成/软件开发
+副业：网红艺人经济
+社会职务：世界华人精英联合会副会长,深圳企业创新发展促进会副会长,深圳企业创新发展促进会互联网+专业委员会会长
+现有资源：套路直播网红营销推广平台
+需求资源：资本/文化行业合作方，企业营销推广，互联网行业解决方案咨询
+平台：儒承驿站
+公司地址：深圳南山沙河西路尚美科技大厦1501
+
+openid_info: 	openid, ...
+card_info: 		card_id, name, ...
+class_info: 	class_id, desc
+card_class: 	id, card_id, class_id
+vip_info: 		level, desc
+card_vip:		id, card_id, level
+
+根据card s 分类出特定的class，对class进行群发操作
+card 有vip等级，可以查询特定的信息
+
+city: "深圳"
+country: "中国"
+groupid: 0
+headimgurl: "http://wx.qlogo.cn/mmopen/s7iaNTWWsPdiaRyONg0augWjibMEVx1eNSCQkYac2rNDM4vznFFickibztiaRsmANM4gsVG94fHAYpwO1WrSNTkBkLxAvFPKISfoQG/0"
+language: "zh_CN"
+nickname: "xy"
+openid: "obGTrwZg9J7Ze2h_GTvYUugshx5g"
+province: "广东"
+remark: ""
+sex: 1
+subscribe: 1
+subscribe_time: 1473857561
+tagid_list: []
+
+CREATE TABLE `openid_info` (
+  `openid` varchar(255) NOT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `country` varchar(50) DEFAULT NULL,
+  `groupid` int(10) DEFAULT NULL,
+  `headimgurl` varchar(255) DEFAULT NULL,
+  `language` varchar(50) DEFAULT NULL,
+  `nickname` varchar(50) DEFAULT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `sex` int(10) DEFAULT NULL,
+  `subscribe` int(10) DEFAULT NULL,
+  `subscribe_time` int(10) DEFAULT NULL,
+  `tagid_list` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`openid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
