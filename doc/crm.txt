@@ -56,5 +56,18 @@ CREATE TABLE `openid_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-gaofei3@kingsoft.com
-xigua123
+
+网页授权流程：
+
+微信																				公众号																	用户
+																					1.oauth2/auth?redirect_url=mine
+																																					   		用户点击
+																					2.请求mine?code=xxx&state=xx
+3.公众号请求oauth2/access_token?code=xxx							
+4.返回access_token, openid								  5.对openid权限进行判断
+																					6.返回给用户最终的页面
+
+
+
+wanggaofei3@kingsoft.com
+wangxigua123
