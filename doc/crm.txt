@@ -1,19 +1,19 @@
 
-��������ĳĳ
-��λ������׿�⹻�Ƽ�
-ְ�񣺶��³�
-�绰��181*****
-΢�ţ�181****
-QQ��5****
-���У�����
-���᣺ɽ��
-��ҵ���Ļ���ҵ��������Ŀ����/��ͳ��ҵ��������Ŀ����/ֱ��Ӫ���ƹ�ƽ̨/ϵͳ����/��������
-��ҵ���������˾���
-���ְ�����绪�˾�Ӣ���ϻḱ�᳤,������ҵ���·�չ�ٽ��ḱ�᳤,������ҵ���·�չ�ٽ��ụ����+רҵίԱ��᳤
-������Դ����·ֱ������Ӫ���ƹ�ƽ̨
-������Դ���ʱ�/�Ļ���ҵ����������ҵӪ���ƹ㣬��������ҵ���������ѯ
-ƽ̨�������վ
-��˾��ַ��������ɽɳ����·�����Ƽ�����1501
+姓名：赵某某
+单位：深圳卓意够科技
+职务：董事长
+电话：181*****
+微信：181****
+QQ：5****
+城市：深圳
+籍贯：山东
+主业：文化行业互联网项目孵化/传统行业互联网项目孵化/直播营销推广平台/系统集成/软件开发
+副业：网红艺人经济
+社会职务：世界华人精英联合会副会长,深圳企业创新发展促进会副会长,深圳企业创新发展促进会互联网+专业委员会会长
+现有资源：套路直播网红营销推广平台
+需求资源：资本/文化行业合作方，企业营销推广，互联网行业解决方案咨询
+平台：儒承驿站
+公司地址：深圳南山沙河西路尚美科技大厦1501
 
 openid_info: 	openid, ...
 card_info: 		card_id, name, ...
@@ -22,17 +22,17 @@ card_class: 	id, card_id, class_id
 vip_info: 		level, desc
 card_vip:		id, card_id, level
 
-����card s ������ض���class����class����Ⱥ������
-card ��vip�ȼ������Բ�ѯ�ض�����Ϣ
+根据card s 分类出特定的class，对class进行群发操作
+card 有vip等级，可以查询特定的信息
 
-city: "����"
-country: "�й�"
+city: "深圳"
+country: "中国"
 groupid: 0
 headimgurl: "http://wx.qlogo.cn/mmopen/s7iaNTWWsPdiaRyONg0augWjibMEVx1eNSCQkYac2rNDM4vznFFickibztiaRsmANM4gsVG94fHAYpwO1WrSNTkBkLxAvFPKISfoQG/0"
 language: "zh_CN"
 nickname: "xy"
 openid: "obGTrwZg9J7Ze2h_GTvYUugshx5g"
-province: "�㶫"
+province: "广东"
 remark: ""
 sex: 1
 subscribe: 1
