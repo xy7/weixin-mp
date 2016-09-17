@@ -16,11 +16,10 @@ QQ：5****
 公司地址：深圳南山沙河西路尚美科技大厦1501
 
 openid_info: 	openid, ...
-card_info: 		card_id, name, ...
+card_info: 		card_id, name, ... , vip
 class_info: 	class_id, desc
 card_class: 	id, card_id, class_id
-vip_info: 		level, desc
-card_vip:		id, card_id, level
+
 
 根据card s 分类出特定的class，对class进行群发操作
 card 有vip等级，可以查询特定的信息
@@ -56,3 +55,6 @@ CREATE TABLE `openid_info` (
   PRIMARY KEY (`openid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+gaofei3@kingsoft.com
+xigua123
