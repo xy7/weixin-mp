@@ -4,7 +4,7 @@ public class ClassInfo {
 	
 	private int classId;
 	private String className;
-
+	private String desc;
 	
 	public int getClassId() {
 		return classId;
@@ -20,9 +20,16 @@ public class ClassInfo {
 	}
 
 	
+	public String getDesc() {
+		return desc;
+	}
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+	
 	@Override
 	public String toString() {
-		return "ClassInfo [classId=" + classId + ", className=" + className + "]";
+		return "ClassInfo [classId=" + classId + ", className=" + className + ", desc=" + desc + "]";
 	}
 
 }

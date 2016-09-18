@@ -4,7 +4,7 @@
 <mapper namespace="com.seasun.weixinmp.mapper.ReportMapper">  
 
 		<select id="test" resultType="ClassInfo">
-        select class_id, class_name from class_info
+        select class_id, class_name, `desc` from class_info
     </select>
 
 </mapper>
