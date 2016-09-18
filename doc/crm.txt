@@ -75,9 +75,24 @@ CREATE TABLE `openid_info` (
 
 2.单发预览
     请求 curl -H "Content-Type: application/json" -X POST -d '{"touser":"obGTrwZg9J7Ze2h_GTvYUugshx5g", "text":{"content":"CONTENT"}, "msgtype":"text"}' https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
-
-
-
+    返回 {"errcode":0,"errmsg":"preview success"}
+  
+3.创建分组 最多支持创建100个分组
+    请求  curl -H "Content-Type: application/json" -X POST -d '{"group":{"name":"test"}}' https://api.weixin.qq.com/cgi-bin/groups/create?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
+    返回 {"group":{"id":100,"name":"test"}}
+    
+4.批量移动用户分组
+    请求 curl -H "Content-Type: application/json" -X POST -d '{"openid_list":["obGTrwZg9J7Ze2h_GTvYUugshx5g","obGTrwduDNxZjeSoxBB0s9juJx4k"],"to_groupid":100}' https://api.weixin.qq.com/cgi-bin/groups/members/batchupdate?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
+    返回 {"errcode":0,"errmsg":"ok"}
+    
+5.分组群发
+    请求  curl -H "Content-Type: application/json" -X POST -d '{"filter":{"is_to_all":false, "group_id":"100"}, "text":{"content":"CONTENT_GROUP"},"msgtype":"text"}' https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
+    返回 {"errcode":0,"errmsg":"send job submission success","msg_id":1000000001}
+    
+6.根据OpenID列表群发【订阅号不可用，服务号认证后可用】
+    请求 curl -H "Content-Type: application/json" -X POST -d '{"touser":["obGTrwZg9J7Ze2h_GTvYUugshx5g","obGTrwduDNxZjeSoxBB0s9juJx4k"],"msgtype": "text", "text": { "content": "send text msg to openid list"}}' https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
+    返回 {"errcode":0,"errmsg":"send job submission success","msg_id":3147483650}
+    
 
 
 wanggaofei3@kingsoft.com

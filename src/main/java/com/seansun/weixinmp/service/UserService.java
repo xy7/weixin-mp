@@ -39,6 +39,7 @@ public class UserService {
 
 	@Autowired
 	private WeixinRepository weixinRepository;
+	
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	public static final String URL_GETACCESSTOKEN = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}";
 	public static final String URL_GETUSERLIST = "https://api.weixin.qq.com/cgi-bin/user/get?access_token={0}&next_openid={1}";
@@ -182,27 +183,27 @@ public class UserService {
 		return response;
 	}
 
-	public WeixinUser getWeixinUser(String openid) {
-		WechatPushUser wechatPushUser = reportMapper.getUserByOpenId(openid);
-		if (wechatPushUser == null) {
-			User user = this.getUser(openid);
-			if (user != null) {
-				wechatPushUser = reportMapper.getUserByNickname(user.getNickname());
-				if (wechatPushUser != null) {
-					wechatPushUser.setOpenId(openid);
-					int result = reportMapper.updateUser(wechatPushUser);
-					logger.info("updateUser requestData={}, response={}", JSON.toJSONString(wechatPushUser), result);
-				}
-			}
-		}
-
-		if (wechatPushUser != null) {
-			WeixinUser weixinUser = new WeixinUser();
-			weixinUser.setOpenid(openid);
-			weixinUser.setRoleType(wechatPushUser.getType().toString());
-			weixinUser.setXgAppId(wechatPushUser.getXgAppId());
-			return weixinUser;
-		}
-		return null;
-	}
+//	public WeixinUser getWeixinUser(String openid) {
+//		WechatPushUser wechatPushUser = reportMapper.getUserByOpenId(openid);
+//		if (wechatPushUser == null) {
+//			User user = this.getUser(openid);
+//			if (user != null) {
+//				wechatPushUser = reportMapper.getUserByNickname(user.getNickname());
+//				if (wechatPushUser != null) {
+//					wechatPushUser.setOpenId(openid);
+//					int result = reportMapper.updateUser(wechatPushUser);
+//					logger.info("updateUser requestData={}, response={}", JSON.toJSONString(wechatPushUser), result);
+//				}
+//			}
+//		}
+//
+//		if (wechatPushUser != null) {
+//			WeixinUser weixinUser = new WeixinUser();
+//			weixinUser.setOpenid(openid);
+//			weixinUser.setRoleType(wechatPushUser.getType().toString());
+//			weixinUser.setXgAppId(wechatPushUser.getXgAppId());
+//			return weixinUser;
+//		}
+//		return null;
+//	}
 }
