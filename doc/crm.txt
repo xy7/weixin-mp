@@ -69,5 +69,16 @@ CREATE TABLE `openid_info` (
 
 
 
+1.获取access_token
+    请求 https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxd9dd92aa4899782f&secret=ab2bf7291b28baa5de3ea80bc12ab25c
+    返回 {"access_token":"8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA","expires_in":7200}
+
+2.单发预览
+    请求 curl -H "Content-Type: application/json" -X POST -d '{"touser":"obGTrwZg9J7Ze2h_GTvYUugshx5g", "text":{"content":"CONTENT"}, "msgtype":"text"}' https://api.weixin.qq.com/cgi-bin/message/mass/preview?access_token=8cfZW34PviFXMWO3I9cl26PzABTCvqsKP6hQKmLHvk6E8xu5kxpdB9fLDEYzRVUOf8Y_Lk9xs5mmr_6kUpyIgaJvf_-eaxq4gLI-Y3QJbosP8lrrMSttwrXNCHSM_WJmYSVbAEADXA
+
+
+
+
+
 wanggaofei3@kingsoft.com
 wangxigua123
