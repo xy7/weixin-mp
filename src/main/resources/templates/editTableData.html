@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"></meta>
+<title>show tables</title>
+</head>
+
+<body>
+
+<br/><br/>
+<tr><td th:text="${tableName}">tableName</td></tr>
+<br/><br/>
+<tr>
+	<form th:action="${tableName}" method="post" >
+	
+	<td th:each="it:${searchList}">
+		<td th:text="${it.columnComment}+':'">columnComment</td>
+		<input type="text" th:name="${it.columnName}" value="" />
+	</td>
+
+	<td><input type="submit" value="search" /></td>
+	</form>
+</tr>
+
+<table border="1">
+
+	<tr bgcolor="#999999" >
+		<th th:each="it:${columnList}" th:text="${it.columnComment}"></th>
+		<th></th>
+	</tr>
+	
+	<tr th:each="map:${dataList}">
+		<form action="" method="post">
+			<td th:each="entry:${map}" th:text="${entry.value}" th:if="${entry.key!='_id'}"></td>
+			<td>
+				<input type="submit" value="edit" onclick="this.form.action='showTableRow';this.form.submit();" />
+			</td>
+			<input type="hidden" name="tableName" th:value="${tableName}" />
+			<input type="hidden" name="_id" th:value="${map._id}"/>
+		</form>
+	</tr>
+
+</table>
+
+<tr>
+	<form action="showTableRow" method="post" >
+		<input type="hidden" name="_id" value="0"/>
+		<input type="hidden" name="tableName" th:value="${tableName}"/>
+		<td><input type="submit" value="add" /></td>
+	</form>
+</tr>
+
+</body>
+</html>

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
+import com.seasun.weixinmp.mapper.ReportMapper;
 import com.seasun.weixinmp.repository.WeixinRepository;
+import com.seasun.weixinmp.service.model.CardInfo;
 import com.seasun.weixinmp.service.vo.ArticleMessage;
 import com.seasun.weixinmp.service.vo.AuthorizeUrlRequest;
 import com.seasun.weixinmp.service.vo.FilterObject;
@@ -54,34 +56,23 @@ public class MessageService {
 	public static final String URL_SENDOPENIDLIST = "https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token={0}";
 	public static final String URL_USERDEFINEDMENU = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token={0}";
 	
-	public SendResponse sendText2Card(String cardId, String content) {
+	@Autowired
+	private ReportMapper reportMapper;
+	
+	public SendResponse sendText2Card(int cardId, String content) {
 		
-		String openid = cardId; //查询db获取openid
-		
-		String accessToken = userService.getAccessToken();
-		String url = MessageFormat.format(URL_SENDOPENID, accessToken);
-		OpenidMessageRequest request = new OpenidMessageRequest();
-		request.setTouser(openid);
-		request.setMsgtype(OpenidMessageRequest.MSGTYPE_TEXT);
-		TextMessage textMessage = new TextMessage();
-		textMessage.setContent(content);
-		request.setText(textMessage);
-
-		String body = JSON.toJSONString(request);
-		String responseString = HttpUtils.doPostJson(url, body);
-		if (StringUtils.isEmpty(responseString)) {
-			String msg = MessageFormat.format("error in sendText2Openid to the url:{0}, body:{1}, response:{2}", url, body, responseString);
+		CardInfo card = reportMapper.getCardInfoById(cardId);
+		if(card == null){
+			String msg = MessageFormat.format("error in sendText2Card, find null from the cardId: {0}", cardId);
 			logger.error(msg);
 			SendResponse sendResponse = new SendResponse();
-			sendResponse.setCode(ErrorCode.ERR_CONNECT);
+			sendResponse.setCode(ErrorCode.ERR_RETURN);
 			sendResponse.setMsg(msg);
 			return sendResponse;
 		}
-		WeixinErrorResponse response = JSON.parseObject(responseString, WeixinErrorResponse.class);
-		SendResponse sendResponse = new SendResponse();
-		sendResponse.setCode(response.getErrcode());
-		sendResponse.setMsg(response.getErrmsg());
-		return sendResponse;
+		
+		String openid = card.getOpenid(); //查询db获取openid
+		return sendText2Openid(openid, content);
 	}
 
 	public SendResponse sendText2Openid(String openid, String content) {

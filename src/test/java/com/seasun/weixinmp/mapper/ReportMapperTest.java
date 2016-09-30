@@ -1,4 +1,4 @@
-package com.seansun.weixinmp.service.model;
+package com.seasun.weixinmp.mapper;
 
 import static org.junit.Assert.*;
 
@@ -9,23 +9,23 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.seasun.weixinmp.ServerApplication;
-import com.seasun.weixinmp.mapper.ReportMapper;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = ServerApplication.class)
-public class ClassInfoTest {
-	
+public class ReportMapperTest {
+
 	@Autowired
 	private ReportMapper reportMapper;
 
 	@Test
-	public void test() {
+	public void testTest() {
 		System.out.println(reportMapper.test());
 	}
 	
 	@Test
-	public void getCardInfoById(){
+	public void getCardInfoByIdTest(){
 		System.out.println(reportMapper.getCardInfoById(1));
+		System.out.println(reportMapper.getCardInfoById(2));
 	}
 
 }

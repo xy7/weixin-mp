@@ -6,5 +6,11 @@
 		<select id="test" resultType="ClassInfo">
         select class_id, class_name, `desc` from class_info
     </select>
+    
+    <select id="getCardInfoById" resultType="CardInfo">
+        select * from card_info where card_id = #{cardId} limit 1
+    </select>
+    
+    
 
 </mapper>

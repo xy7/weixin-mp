@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"></meta>
+<title>show tables</title>
+</head>
+
+<body>
+
+<br/><br/>
+<tr><td th:text="${tableName}">tableName</td></tr>
+<br/><br/>
+
+
+<tr><table>
+	<form action="" method="post">
+		<tr th:each="kvc:${kvcs}" th:if="${kvc.key!='_id'}">
+		  <td th:text="${kvc.comment + ':'}"> </td>
+			<td><input type="text" th:name="${kvc.key}" th:value="${kvc.value}" /></td>
+			<br/>
+		</tr>
+		
+		<tr>
+			<input type="hidden" name="tableName" th:value="${tableName}" />
+			<input th:each="kvc:${kvcs}" type="hidden" name="_id" th:value="${kvc.value}" th:if="${kvc.key=='_id'}"/>
+		</tr>
+
+		<tr>
+			<td>
+				<input type="submit" value="update" onclick="this.form.action='editTableRow/update';this.form.submit();" th:if="${isInsert!=1}" />
+				<input type="submit" value="delete" onclick="this.form.action='editTableRow/delete';this.form.submit();" th:if="${isInsert!=1}" /> 
+				<input type="submit" value="insert" onclick="this.form.action='editTableRow/insert';this.form.submit();" th:if="${isInsert==1}" /> 
+			</td>
+		</tr>
+	</form>
+</table></tr>
+
+</body>
+</html>
