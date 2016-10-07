@@ -25,7 +25,7 @@
 <table border="1">
 
 	<tr bgcolor="#999999" >
-		<th th:each="it:${columnList}" th:text="${it.value}"></th>
+		<th th:each="it:${columnList}" th:text="${it.value}" th:if="${it.value!='_id'}"></th>
 		<th></th>
 	</tr>
 	

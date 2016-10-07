@@ -18,7 +18,7 @@
 		  <td th:text="${kvc.comment + ':'}"> </td>
 		  <td>
 		  	<input type="text" th:name="${kvc.key}" th:value="${kvc.value}" th:if="${!fks.contains(kvc.key)}"/>
-		  	<select th:if="${fks.contains(kvc.key)}">
+		  	<select th:name="${kvc.key}" th:if="${fks.contains(kvc.key)}">
 			  <option th:each="fkvc:${kvc.value}" th:value="${fkvc.key}" th:text="${fkvc.comment}"></option>
 			</select>
 		  </td>

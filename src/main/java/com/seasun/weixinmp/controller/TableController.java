@@ -202,7 +202,7 @@ public class TableController implements InitializingBean{
 			return res;
 		}
 		
-		public static List<KVCom> parse(Map<String, String> columnList, Map<String, Object> map
+		public static List<KVCom> leftJoin(Map<String, String> columnList, Map<String, Object> map
 				, Map<String, List<KVCom>> fkValues){
 			List<KVCom> res = new ArrayList<>();
 			for(String key:columnList.keySet()){
@@ -224,7 +224,7 @@ public class TableController implements InitializingBean{
 		model.put("tableName", tableName);
 		
 		Map<String, List<KVCom>> fkValues = new HashMap<>();
-		Map<String, KVCom> fkList = tableForeignKVComs.get(tableName);
+		Map<String, KVCom> fkList = tableForeignKVComs.getOrDefault(tableName, new HashMap<>());
 		for(Map.Entry<String, KVCom> e:fkList.entrySet()){
 			String fkTable = e.getValue().key;
 			String fkComm = e.getValue().comment;
@@ -263,7 +263,7 @@ public class TableController implements InitializingBean{
 			log.info("show table row: " + map);
 		}
 		
-		kvcs = KVCom.parse(columnComms, map, fkValues);
+		kvcs = KVCom.leftJoin(columnComms, map, fkValues);
 		model.put("kvcs", kvcs);
 		
 		return "tableRow";
