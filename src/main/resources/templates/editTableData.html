@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"></meta>
-<title>show tables</title>
+<title>show table data</title>
 </head>
 
 <body>
@@ -14,8 +14,8 @@
 	<form th:action="${tableName}" method="post" >
 	
 	<td th:each="it:${searchList}">
-		<td th:text="${it.columnComment}+':'">columnComment</td>
-		<input type="text" th:name="${it.columnName}" value="" />
+		<td th:text="${it.value}+':'">columnComment</td>
+		<input type="text" th:name="${it.key}" value="" />
 	</td>
 
 	<td><input type="submit" value="search" /></td>
@@ -25,7 +25,7 @@
 <table border="1">
 
 	<tr bgcolor="#999999" >
-		<th th:each="it:${columnList}" th:text="${it.columnComment}"></th>
+		<th th:each="it:${columnList}" th:text="${it.value}"></th>
 		<th></th>
 	</tr>
 	
