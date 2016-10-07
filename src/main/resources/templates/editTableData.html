@@ -8,13 +8,16 @@
 <body>
 
 <br/><br/>
-<tr><td th:text="${tableName}">tableName</td></tr>
+<tr>
+	<td th:text="${tableName}">tableName</td>
+	<td><a href="../showTables">返回目录</a></td>
+</tr>
 <br/><br/>
 <tr>
 	<form th:action="${tableName}" method="post" >
 	
 	<td th:each="it:${searchList}">
-		<td th:text="${it.value}+':'">columnComment</td>
+		<td th:text="${it.comment}+':'">columnComment</td>
 		<input type="text" th:name="${it.key}" value="" />
 	</td>
 
@@ -25,7 +28,7 @@
 <table border="1">
 
 	<tr bgcolor="#999999" >
-		<th th:each="it:${columnList}" th:text="${it.value}" th:if="${it.value!='_id'}"></th>
+		<th th:each="it:${columnList}" th:text="${it.comment}" th:if="${it.key!='_id'}"></th>
 		<th></th>
 	</tr>
 	
