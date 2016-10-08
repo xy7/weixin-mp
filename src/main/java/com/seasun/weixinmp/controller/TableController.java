@@ -133,6 +133,7 @@ public class TableController implements InitializingBean {
 	public String editTableData(Map<String, Object> model, @PathVariable("tableName") String tableName,
 			HttpServletRequest request) {
 		model.put("tableName", tableName);
+		model.put("tableComment", tables.get(tableName) );
 		// 从表中查出数据
 		List<KVCom> columnList = tableColumns.get(tableName);
 
@@ -179,8 +180,26 @@ public class TableController implements InitializingBean {
 
 		}
 
-		model.put("dataList", dataList);
+		
 		System.out.println(dataList);
+		
+		int totalRows = dataList.size();
+		int size = 5;
+		int totalPages = (int)Math.ceil((double)totalRows/size);
+		String curPage = request.getParameter("page");
+		int number = Integer.parseInt( curPage == null ? "0" : curPage);
+		
+		int fromIndex = number * size;
+		int toIndex = (number+1) * size;
+		model.put("dataList", dataList.subList(fromIndex < totalRows ? fromIndex:0, toIndex < totalRows ? toIndex:totalRows ) );
+		
+		Map<String, Object> contactsPage = new HashMap<>();
+		contactsPage.put("totalPages", totalPages);
+		contactsPage.put("number", number);
+		contactsPage.put("size", size);
+		contactsPage.put("firstPage", number == 0);
+		contactsPage.put("lastPage", number == totalPages - 1);
+		model.put("contactsPage", contactsPage);
 
 		return "editTableData";
 	}

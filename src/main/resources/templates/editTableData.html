@@ -9,7 +9,7 @@
 
 <br/><br/>
 <tr>
-	<td th:text="${tableName}">tableName</td>
+	<td th:text="${tableComment}">tableComment</td>
 	<td><a href="../showTables">返回目录</a></td>
 </tr>
 <br/><br/>
@@ -17,7 +17,7 @@
 	<form th:action="${tableName}" method="post" >
 	
 	<td th:each="it:${searchList}">
-		<td th:text="${it.comment}+':'">columnComment</td>
+		<td th:text="${it.comment}+':'">columnComment:</td>
 		<input type="text" th:name="${it.key}" value="" />
 	</td>
 
@@ -28,13 +28,13 @@
 <table border="1">
 
 	<tr bgcolor="#999999" >
-		<th th:each="it:${columnList}" th:text="${it.comment}" th:if="${it.key!='_id'}"></th>
+		<th th:each="it:${columnList}" th:text="${it.comment}" th:if="${it.key!='_id'}">columnComment</th>
 		<th></th>
 	</tr>
 	
 	<tr th:each="map:${dataList}">
 		<form action="" method="post">
-			<td th:each="entry:${map}" th:text="${entry.value}" th:if="${entry.key!='_id'}"></td>
+			<td th:each="entry:${map}" th:text="${entry.value}" th:if="${entry.key!='_id'}">columnValue</td>
 			<td>
 				<input type="submit" value="edit" onclick="this.form.action='showTableRow';this.form.submit();" />
 			</td>
@@ -44,6 +44,29 @@
 	</tr>
 
 </table>
+
+<div class="table-pagination">
+    <ul class="pagination" th:if="${contactsPage.totalPages>0}">
+        <li th:class="${contactsPage.number eq 0} ? 'disabled' : ''">
+            <a th:if="${not contactsPage.firstPage}" th:href="@{${'/editTableData/'+tableName}(page=${contactsPage.number-1},size=${contactsPage.size})}">Previous</a>
+            <a th:if="${contactsPage.firstPage}" href="javascript:void(0);">Previous</a>
+        </li>
+
+        <li th:each="pageNo : ${#numbers.sequence(0, contactsPage.totalPages - 1)}" th:class="${contactsPage.number eq pageNo}? 'active' : ''">
+            <a th:if="${contactsPage.number  eq pageNo}" href="javascript:void(0);">
+                <span th:text="${pageNo + 1}" style="font-size:20px;"></span>
+            </a>
+            <a th:if="${not (contactsPage.number  eq pageNo)}" th:href="@{${'/editTableData/'+tableName}(page=${pageNo},size=${contactsPage.size})}">
+                <span th:text="${pageNo + 1}"></span>
+            </a>
+
+        </li>
+        <li th:class="${contactsPage.number + 1 ge contactsPage.totalPages} ? 'disabled' : ''">
+            <a th:if="${not contactsPage.lastPage}" th:href="@{${'/editTableData/'+tableName}(page=${contactsPage.number+1},size=${contactsPage.size})}">Next</a>
+            <a th:if="${contactsPage.lastPage}" href="javascript:void(0);">Next</a>
+        </li>
+    </ul>
+</div>
 
 <tr>
 	<form action="showTableRow" method="post" >
