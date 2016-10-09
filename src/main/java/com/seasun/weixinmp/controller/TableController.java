@@ -5,8 +5,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,7 +46,7 @@ public class TableController implements InitializingBean {
 	public Map<String, List<KVCom>> tableForeignKeys = null;
 
 	private Map<String, String> transMap(List<Map<String, Object>> tables) {
-		Map<String, String> res = new HashMap<>();
+		Map<String, String> res = new TreeMap<>();
 		for (Map<String, Object> table : tables) {
 			String key = table.get("keyName").toString();
 			String value = table.get("valueName").toString();
@@ -59,7 +61,8 @@ public class TableController implements InitializingBean {
 			tables = transMap(
 					jdbc.queryForList(
 							"select TABLE_NAME keyName, TABLE_COMMENT valueName from information_schema.tables "
-									+ "where table_type = 'BASE TABLE' and TABLE_SCHEMA in ( select database()) ")
+									+ " where table_type = 'BASE TABLE' and TABLE_SCHEMA in ( select database()) "
+									+ " and TABLE_NAME like '\\_%' order by TABLE_COMMENT")
 					);
 		}
 
