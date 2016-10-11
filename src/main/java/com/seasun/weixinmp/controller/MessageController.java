@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class TableController implements InitializingBean {
+public class MessageController implements InitializingBean {
 
 	private static final String _ID = "_id";
 	private static final String _NAME = "_name";
-	private static final Log log = LogFactory.getLog(TableController.class);
+	private static final Log log = LogFactory.getLog(MessageController.class);
 
 	@Autowired
 	private JdbcTemplate jdbc;
@@ -122,20 +122,23 @@ public class TableController implements InitializingBean {
 
 		log.info("init table finish.");
 	}
-
-	@RequestMapping({"/showTables", "/", "/index"})
-	public String showTables(Map<String, Object> model) {
-		model.put("time", new Date());
-		model.put("message", "目录：");
-
-		model.put("list", tables);
-
-		return "showTables";
+	
+	@RequestMapping("/sendMessage")
+	public @ResponseBody String sendMessage(Map<String, Object> model,
+			HttpServletRequest request) {
+		return "todo: call weixin mp api to send!";
+	}
+	
+	@RequestMapping("/showHistoryMessage")
+	public @ResponseBody String showHistoryMessage(Map<String, Object> model,
+			HttpServletRequest request) {
+		return "todo: show all History Message!";
 	}
 
-	@RequestMapping(value = "/editTableData/{tableName}")
-	public String editTableData(Map<String, Object> model, @PathVariable("tableName") String tableName,
+	@RequestMapping("/showMessage")
+	public String showMessage(Map<String, Object> model,
 			HttpServletRequest request) {
+		String tableName = "_message_class";
 		model.put("tableName", tableName);
 		model.put("tableComment", tables.get(tableName) );
 		// 从表中查出数据
@@ -219,7 +222,7 @@ public class TableController implements InitializingBean {
 		contactsPage.put("lastPage", number == totalPages - 1);
 		model.put("contactsPage", contactsPage);
 
-		return "editTableData";
+		return "showMessage";
 	}
 
 	private void replaceFkId2Name(String tableName, List<Map<String, Object>> dataList) {
@@ -281,122 +284,5 @@ public class TableController implements InitializingBean {
 		}
 	}
 
-	@RequestMapping(value = "/editTableData/showTableRow", method = RequestMethod.POST)
-	public String showTableRow(Map<String, Object> model, HttpServletRequest request) {
-
-		String tableName = request.getParameter("tableName");
-		model.put("tableName", tableName);
-
-		Map<String, List<KVCom>> fkValues = new HashMap<>();
-		List<KVCom> fkList = tableForeignKeys.getOrDefault(tableName, new ArrayList<>());
-		for (KVCom e : fkList) {
-			String fkTable = e.value.toString();
-			String fkSql = String.format("select %s `value`, %s `comment` from %s", _ID, _NAME, fkTable);
-			List<KVCom> list = nameJdbc.query(fkSql, new RowMapper<KVCom>() {
-
-				@Override
-				public KVCom mapRow(ResultSet rs, int rowNum) throws SQLException {
-					return new KVCom(rs.getString(1), null, rs.getString(2));
-				}
-
-			});
-
-			String col = e.key;
-			fkValues.put(col, list);
-		}
-		model.put("fks", fkValues.keySet());
-
-		Map<String, String> columnComms = tableColumnsMap.get(tableName);
-		System.out.println(columnComms);
-
-		int id = Integer.parseInt(request.getParameter(_ID));
-		Map<String, Object> map = null;
-
-		List<KVCom> kvcs = new ArrayList<>();
-
-		if (id == 0) {
-			model.put("isInsert", 1);
-		} else {
-			String sql = "select * from " + tableName + " where " + _ID + " = " + id + " limit 1";
-			System.out.println(sql);
-			map = jdbc.queryForMap(sql);
-			log.info("show table row: " + map);
-		}
-
-		kvcs = KVCom.leftJoin(columnComms, map, fkValues);
-		model.put("kvcs", kvcs);
-
-		return "tableRow";
-	}
-
-	@RequestMapping(value = "/editTableData/editTableRow/update", method = RequestMethod.POST)
-	public String updateTableRow(HttpServletRequest request) {
-
-		String tableName = request.getParameter("tableName");
-
-		Map<String, String> columnList = tableColumnsMap.get(tableName);
-
-		StringBuilder sb = new StringBuilder();
-
-		for (String col : columnList.keySet()) {
-			if (col.equals(_ID))
-				continue;
-
-			String value = request.getParameter(col);
-			if (value != null && !value.isEmpty() && !value.equalsIgnoreCase("null")) {
-				sb.append(",`").append(col).append("`=").append("'").append(value).append("'");
-			}
-		}
-
-		int id = Integer.parseInt(request.getParameter(_ID));
-
-		String sql = "update " + tableName + " set " + sb.toString().substring(1) + " where " + _ID + "=" + id;
-		System.out.println(sql);
-		int res = jdbc.update(sql);
-		log.info("update res: " + res);
-		return "redirect:/editTableData/" + tableName;
-	}
-
-	@RequestMapping(value = "/editTableData/editTableRow/insert", method = RequestMethod.POST)
-	public String insertTableRow(HttpServletRequest request) {
-
-		String tableName = request.getParameter("tableName");
-
-		StringBuilder sbCol = new StringBuilder();
-		StringBuilder sbValue = new StringBuilder();
-
-		Map<String, String> columnList = tableColumnsMap.get(tableName);
-
-		for (String col : columnList.keySet()) {
-			if (col.equals(_ID))
-				continue;
-			String value = request.getParameter(col);
-			if (value != null && !value.isEmpty() && !value.equalsIgnoreCase("null")) {
-				sbCol.append(",`").append(col).append("`");
-				sbValue.append(",").append("'").append(value).append("'");
-			}
-		}
-
-		String sql = "insert into " + tableName + " (" + sbCol.toString().substring(1) + ") values( "
-				+ sbValue.toString().substring(1) + ")";
-		System.out.println(sql);
-		int res = jdbc.update(sql);
-		log.info("insert res: " + res);
-
-		return "redirect:/editTableData/" + tableName;
-	}
-
-	@RequestMapping(value = "/editTableData/editTableRow/delete", method = RequestMethod.POST)
-	public String deleteTableRow(HttpServletRequest request) {
-
-		String tableName = request.getParameter("tableName");
-		int id = Integer.parseInt(request.getParameter(_ID));
-
-		String sql = "delete from " + tableName + " where " + _ID + "=" + id;
-		System.out.println(sql);
-		int res = jdbc.update(sql);
-		log.info("delete res: " + res);
-		return "redirect:/editTableData/" + tableName;
-	}
 
 }
