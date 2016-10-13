@@ -18,7 +18,7 @@ apply plugin: 'io.spring.dependency-management'
 
 springBoot {
     backupSource = false
-    mainClass = "com.seansun.weixinmp.ServerApplication"
+    mainClass = "com.seasun.weixinmp.ServerApplication"
 }
 
 repositories {
